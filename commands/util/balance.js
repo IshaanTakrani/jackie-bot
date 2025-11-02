@@ -18,23 +18,6 @@ export async function execute(interaction) {
 			'Balance'
 		);
 
-		// const bet = interaction.options.getInteger('bet');
-		// let embed = {
-		// 	color: 0x46ba2a,
-		// 	title: `${interaction.user.username}`,
-		// 	fields: [
-		// 		{
-		// 			name: `${interaction.user.username}'s balance:`,
-		// 			value: `${userData.balance} :coin:`,
-		// 		},
-		// 	],
-		// 	thumbnail: {
-		// 		url: interaction.user.displayAvatarURL({
-		// 			dynamic: true,
-		// 			size: 4096,
-		// 		}),
-		// 	},
-		// };
 		await interaction.reply({ embeds: [embed.build()] });
 
 		updateUser(userData, interaction.user.id);
