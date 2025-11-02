@@ -16,6 +16,34 @@ export async function initUser(id, username) {
 	console.log(error);
 }
 
+export async function fetchUserData(id) {
+	const { data, error } = await supabase
+		.from('users')
+		.select('*')
+		.eq('id', id)
+		.single();
+
+	if (error) {
+		console.log(error);
+		return null;
+	}
+	console.log('fetched: ', id);
+	return data;
+}
+
+export async function updateUser(userObject, id) {
+	const { data, error } = await supabase
+		.from('users')
+		.update({
+			balance: userObject.balance,
+		})
+		.eq('id', id)
+		.select();
+	console.log(userObject);
+	console.log(data);
+	console.log(error);
+}
+
 // module.exports = {
 // 	fetchBalance: async (id) => {
 // 		const { data, error } = await supabase
