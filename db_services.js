@@ -1,5 +1,5 @@
-import 'dotenv/config';
-import { createClient } from '@supabase/supabase-js';
+import "dotenv/config";
+import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseAnonKey = process.env.SUPABASE_KEY;
@@ -7,41 +7,43 @@ const supabaseAnonKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export async function initUser(id, username) {
-	const { error } = await supabase.from('users').insert({
-		id,
-		username,
-		balance: 500,
-		last_claim: new Date().toISOString(),
-	});
-	console.log(error);
+  const { error } = await supabase.from("users").insert({
+    id,
+    username,
+    balance: 500,
+    last_claim: new Date().toISOString(),
+  });
+  if (error) {
+    console.log(error);
+  }
 }
 
 export async function fetchUserData(id) {
-	const { data, error } = await supabase
-		.from('users')
-		.select('*')
-		.eq('id', id)
-		.single();
+  const { data, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", id)
+    .single();
 
-	if (error) {
-		console.log(error);
-		return null;
-	}
-	console.log('fetched: ', id);
-	return data;
+  if (error) {
+    console.log(error);
+    return null;
+  }
+
+  return data;
 }
 
 export async function updateUser(userObject, id) {
-	const { data, error } = await supabase
-		.from('users')
-		.update({
-			balance: userObject.balance,
-		})
-		.eq('id', id)
-		.select();
-	console.log(userObject);
-	console.log(data);
-	console.log(error);
+  const { data, error } = await supabase
+    .from("users")
+    .update({
+      balance: userObject.balance,
+    })
+    .eq("id", id)
+    .select();
+  if (error) {
+    console.log(error);
+  }
 }
 
 // module.exports = {
