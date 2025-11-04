@@ -2,6 +2,7 @@ import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { fetchUserData, initUser, updateUser } from '../../db_services.js';
 import { Die } from '../../game-classes/die.js';
 import { GameResultEmbed } from '../../embedBuilder.js';
+import {emojis} from '../../emojis.json' with { type: 'json' };
 
 export const data = new SlashCommandBuilder()
 	.setName('diceroll')
@@ -28,8 +29,10 @@ export async function execute(interaction) {
 		}
 
 		let d6 = new Die(6);
-		let houseRoll = d6.roll();
-		let playerRoll = d6.roll();
+		let houseRoll = `d${d6.roll()}`;
+
+		let playerRoll = `d${d6.roll()}`;
+
 		let oldbal = userData.balance;
 
 		let embed = new GameResultEmbed(interaction)
