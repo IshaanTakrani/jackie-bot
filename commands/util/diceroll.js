@@ -44,18 +44,18 @@ export async function execute(interaction) {
 			userData.balance -= bet;
 			embed
 				.setStat('negative')
-				.addResult('Results of Diceroll', 'House wins')
+				.addResult("Gain:", `${-bet} :coin:`)
 				.addBalanceSection(oldbal, userData.balance);
 		} else if (playerRoll > houseRoll) {
 			userData.balance += bet;
 			embed
 				.setStat('positive')
-				.addResult('Results of Diceroll', 'Player wins!')
+				.addResult("Gain:", `+${bet} :coin:`)
 				.addBalanceSection(oldbal, userData.balance);
 		} else {
 			embed
 				.setStat('neutral')
-				.addResult('Results of Diceroll', 'Tie!')
+				.addResult('Results of Diceroll', 'Tie!')				
 				.addBalanceSection(oldbal, userData.balance);
 		}
 

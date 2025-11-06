@@ -41,7 +41,6 @@ export async function execute(interaction) {
 
     let embed = new GameResultEmbed(interaction)
       .addResult("Slots\n", `${slotMachine.reelsSymbolString}`)
-      .addResult("Score:", `${slotMachine.getScore()}`)
       .setName("Slots");
 
     let oldbal = userData.balance;
@@ -49,11 +48,15 @@ export async function execute(interaction) {
     userData.balance = userData.balance + slotMachine.getScore();
 
     if (slotMachine.getScore() == 0) {
-      embed.setStat("neutral").addResult("Results of Slots", "No Reward :(");
+      embed.setStat("neutral");
     } else if (slotMachine.getScore() < 0) {
-      embed.setStat("negative").addResult("Results of Slots", "House Wins");
+      embed
+        .setStat("negative")
+        .addResult("Loss:", `${slotMachine.getScore()} :coin:`);
     } else {
-      embed.setStat("positive").addResult("Results of Slots", "Player Wins!");
+      embed
+        .setStat("positive")
+        .addResult("Gain:", `${slotMachine.getScore()} :coin:`);
     }
 
     embed.addBalanceSection(oldbal, userData.balance);
