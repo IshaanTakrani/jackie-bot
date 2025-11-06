@@ -1,8 +1,8 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import { fetchUserData, initUser, updateUser } from '../../db_services.js';
-import { Die } from '../../game-classes/die.js';
+import { Die } from '../../game-classes/Die.js';
 import { GameResultEmbed } from '../../embedBuilder.js';
-import {emojis} from '../../emojis.json' with { type: 'json' };
+import emojis from '../../emojis.json' with { type: 'json' };
 
 export const data = new SlashCommandBuilder()
 	.setName('diceroll')
@@ -29,33 +29,33 @@ export async function execute(interaction) {
 		}
 
 		let d6 = new Die(6);
-		let houseRoll = `d${d6.roll()}`;
+		let houseRoll = d6.roll();
 
-		let playerRoll = `d${d6.roll()}`;
+		let playerRoll = d6.roll();
 
 		let oldbal = userData.balance;
 
 		let embed = new GameResultEmbed(interaction)
-			.addResult('House rolled:', `${houseRoll}`)
-			.addResult(`${interaction.user.username} rolled:`, `${playerRoll}`)
+			.addResult('House rolled:', `${emojis[`d${houseRoll}`]}`)
+			.addResult(`${interaction.user.username} rolled:`, `${emojis[`d${playerRoll}`]}`)
 			.setName('Diceroll');
 
 		if (houseRoll > playerRoll) {
 			userData.balance -= bet;
 			embed
 				.setStat('negative')
-				.addResult('Results of Diceroll', 'House wins')
+				.addResult("Gain:", `${-bet} :coin:`)
 				.addBalanceSection(oldbal, userData.balance);
 		} else if (playerRoll > houseRoll) {
 			userData.balance += bet;
 			embed
 				.setStat('positive')
-				.addResult('Results of Diceroll', 'Player wins!')
+				.addResult("Gain:", `+${bet} :coin:`)
 				.addBalanceSection(oldbal, userData.balance);
 		} else {
 			embed
 				.setStat('neutral')
-				.addResult('Results of Diceroll', 'Tie!')
+				.addResult('Results of Diceroll', 'Tie!')				
 				.addBalanceSection(oldbal, userData.balance);
 		}
 
