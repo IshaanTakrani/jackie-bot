@@ -60,6 +60,12 @@ export class SlotMachine {
     console.log(this.score);
   }
 
+  reset() {
+    this.reelsArray = [];
+    this.reelsSymbolString = "";
+    this.score = 0;
+  }
+
   getScore() {
     return this.score;
   }

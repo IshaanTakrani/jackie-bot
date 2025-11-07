@@ -44,7 +44,7 @@ export async function execute(interaction) {
 			userData.balance -= bet;
 			embed
 				.setStat('negative')
-				.addResult("Gain:", `${-bet} :coin:`)
+				.addResult("Loss:", `${-bet} :coin:`)
 				.addBalanceSection(oldbal, userData.balance);
 		} else if (playerRoll > houseRoll) {
 			userData.balance += bet;
